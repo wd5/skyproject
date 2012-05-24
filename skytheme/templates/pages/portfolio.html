@@ -1,6 +1,6 @@
 {% extends "pages/page.html" %}
 
-{% load mezzanine_tags %}
+{% load mezzanine_tags sky_tags %}
 
 {% block extra_js %}
 {{ block.super }}
@@ -20,13 +20,13 @@
 {% for image in images %}
 <li>
     <a class="thumbnail" rel="#image-{{ image.id }}" title="{{ image.description }}" href="{{ MEDIA_URL }}{{ image.file }}">
-        <img class="image-overlay-thumb" src="{{ MEDIA_URL }}{% thumbnail image.file 320 0 %}">{{ image.description|urlize }}
+        <img class="image-overlay-thumb" src="{{ MEDIA_URL }}{% thumbnail image.file 320 0 %}">{{ image.description|urlize_ext }}
     </a>
     <div id="image-{{ image.id }}" class="image-overlay" style="display:none;">
         <a href="#" class="image-overlay-prev">&larr;</a>
         <a href="#" class="image-overlay-next">&rarr;</a>
         <img class="image-overlay-full" src="{{ MEDIA_URL }}{% thumbnail image.file 0 600 %}"><br>
-        <p>{{ image.description|urlize }}<br>{{ forloop.counter }} / {{ images|length }}</p>
+        <p>{{ image.description|urlize_ext }}<br>{{ forloop.counter }} / {{ images|length }}</p>
     </div>
 </li>
 {% endfor %}
