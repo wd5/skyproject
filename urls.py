@@ -3,7 +3,7 @@ from django.conf.urls.defaults import patterns, include, url
 from django.contrib import admin
 
 from mezzanine.core.views import direct_to_template
-
+from django.conf import settings
 
 admin.autodiscover()
 
@@ -52,6 +52,16 @@ urlpatterns = patterns("",
     # page tree in the admin if it was installed.
 
     # url("^$", "mezzanine.blog.views.blog_post_list", name="home"),
+
+)
+
+# routing media files
+if settings.DEBUG:
+    urlpatterns+= patterns('',
+        url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
+    )
+
+urlpatterns+= patterns('',
 
     # MEZZANINE'S URLS
     # ----------------

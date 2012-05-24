@@ -123,9 +123,6 @@ SITE_ID = 1
 # to load the internationalization machinery.
 USE_I18N = True
 
-# Make this unique, and don't share it with anybody.
-SECRET_KEY = "e0b656f4-9b5f-4501-ab56-244074a2dc88ce6c0e8b-5e97-4cf6-9266-412d406e3ea2f9175a17-1f3f-40b6-a5a9-652eb59bc7bf"
-
 # Tuple of IP addresses, as strings, that:
 #   * See debug comments, when DEBUG is true
 #   * Receive x-headers
@@ -200,7 +197,7 @@ STATIC_ROOT = os.path.join(PROJECT_ROOT, "../static")
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
-MEDIA_URL = STATIC_URL + "media/"
+MEDIA_URL = "/media/"
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
@@ -219,6 +216,24 @@ ROOT_URLCONF = "%s.urls" % PROJECT_DIRNAME
 # Always use forward slashes, even on Windows.
 # Don't forget to use absolute paths, not relative paths.
 TEMPLATE_DIRS = (os.path.join(PROJECT_ROOT, "templates"),)
+
+# Make this unique, and don't share it with anybody.
+# SECRET_KEY
+if not hasattr(globals(), 'SECRET_KEY'):
+    SECRET_FILE = os.path.join(PROJECT_ROOT, 'secret.txt')
+    try:
+        SECRET_KEY = open(SECRET_FILE).read().strip()
+    except IOError:
+        try:
+            from random import choice
+            import string
+            symbols = ''.join((string.lowercase, string.digits, string.punctuation ))
+            SECRET_KEY = ''.join([choice(symbols) for i in range(50)])
+            secret = file(SECRET_FILE, 'w')
+            secret.write(SECRET_KEY)
+            secret.close()
+        except IOError:
+            raise Exception('Please create a %s file with random characters to generate your secret key!' % SECRET_FILE)
 
 
 ################
