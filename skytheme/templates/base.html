@@ -8,35 +8,30 @@
 <meta name="keywords" content="{% block meta_keywords %}{% endblock %}">
 <meta name="description" content="{% block meta_description %}{% endblock %}">
 <title>{% block meta_title %}{% endblock %}{% if settings.SITE_TITLE %} | {{ settings.SITE_TITLE }}{% endif %}</title>
-<link rel="shortcut icon" href="{{ STATIC_URL }}img/favicon.ico">
 
 {% ifinstalled mezzanine.blog %}
 <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url blog_post_feed "rss" %}">
 <link rel="alternate" type="application/atom+xml" title="Atom" href="{% url blog_post_feed "atom" %}">
 {% endifinstalled %}
-
-{% compress css %}
+<link rel="shortcut icon" href="{{ STATIC_URL }}img/favicon.ico">
 <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap.css">
-<link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap.responsive.css">
+{#<link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap.responsive.css">#}
 <link rel="stylesheet" href="{{ STATIC_URL }}css/mezzanine.css">
 {% ifinstalled cartridge.shop %}
 <link rel="stylesheet" href="{{ STATIC_URL }}css/cartridge.css">
 {% endifinstalled %}
 <link rel="stylesheet" href="{{ STATIC_URL }}css/theme.css">
-{% block extra_css %}{% endblock %}
-{% endcompress %}
 
-{% compress js %}
 <script src="{{ STATIC_URL }}mezzanine/js/{{ settings.JQUERY_FILENAME }}"></script>
 <script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
+<script src="{{ STATIC_URL }}js/bootstrap-tooltip.js"></script>
+<script src="{{ STATIC_URL }}js/bootstrap-popover.js"></script>
 <script>
 $(function() {
     $('.middleinput:text, textarea').addClass('xlarge');
     $('.control-group label').addClass('control-label');
 });
 </script>
-{% block extra_js %}{% endblock %}
-{% endcompress %}
 <!--[if lt IE 9]>
 <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
@@ -46,40 +41,38 @@ $(function() {
 </head>
 <body id="{% block body_id %}body{% endblock %}">
 
-<div id="header" class="container">
-
-<div class="row">
-    <div id="headerlogo" class="span6">
-        <div id="site-logo">{% if settings.SITE_TITLE %}<a class="brand" href="/">{{ settings.SITE_TITLE }}</a>{% endif %}</div>
-        <div id="site-tagline">{% if settings.SITE_TAGLINE %}<p class="tagline">{{ settings.SITE_TAGLINE }}</p>{% endif %}</div>
+<div id="headerwrapper" class="container">
+<div id="header" class="row">
+    <div id="headertitle" class="span6">
+        <div>{% if settings.SITE_TITLE %}<a class="brand" href="/">{{ settings.SITE_TITLE }}</a>{% endif %}</div>
+        <div>{% if settings.SITE_TAGLINE %}<p class="tagline">{{ settings.SITE_TAGLINE }}</p>{% endif %}</div>
     </div>
-
-    <div class="span6">
+    <div id="headercontacts" class="span2">
+        {% if settings.SITE_CONTACT_PHONE %}Телефон: {{ settings.SITE_CONTACT_PHONE }}<br />{% endif %}
+        {% if settings.SITE_CONTACT_ICQ %}ICQ: {{ settings.SITE_CONTACT_ICQ }}<br />{% endif %}
+        {% if settings.SITE_CONTACT_SKYPE %}Skype: {{ settings.SITE_CONTACT_SKYPE }}<br />{% endif %}
+    </div>
+    <div id="headerpanel" class="span4">
         {% include "accounts/includes/user_panel.html" %}
-        <form action="{% url search %}" class="navbar-search pull-right">
-        <input class="search-query" placeholder="{% trans "Search" %}" type="text" name="q" value="{{ request.REQUEST.q }}">
+        {#% include "includes/cart_panel.html" %#}
+        <form action="{% url search %}" class="form-search">
+        <input class="input-medium" placeholder="Что ищете?" type="text" name="q" value="{{ request.REQUEST.q }}">
+        <button type="submit" class="btn btn-small"><i class="icon-search"></i></button>
         </form>
     </div>
-</div>
+</div><!-- /#header row -->
 
-</div><!-- /header -->
-<div id="navigation" class="container">
+<!--<div class="row"><div class="span12">-->
 
-<div class="row">
-<div class="span12">
-<div class="navbar">
-<div class="navbar-inner">
-<div class="container">
-    {% page_menu "pages/menus/dropdown.html" %}
-</div></div></div></div>
-</div>
+    <div id="headernavigation">
+        {% page_menu "pages/menus/primary.html" %}
+    </div>
+<!--</div></div>-->
+<!-- row -->
+</div><!-- headerwrapper -->
 
-</div><!-- /navigation -->
-<div id="main" class="container">
-
-<div class="row">
-
-<div id="content" class="span9">
+{% block contentwrapper %}
+<div id="topwrapper" class="container">
 
 {% for message in messages %}
 <div class="alert alert-{{ message.tags }}" data-alert="alert">
@@ -93,36 +86,36 @@ $(function() {
 {% endspaceless %}
 </ul>
 
-<h1>{% block title %}{% endblock %}</h1>
+</div><!-- topwrapper -->
 
-    {% block main %}{% endblock %}
+<div id="contentwrapper" class="container">
+<div class="row">
+{% block corecontent %}
 
-</div>
-
-<div id="sidebar" class="span3 right">
-    <div class="panel">
-    {% block right_panel %}
-    {% ifinstalled mezzanine.twitter %}
-    {% include "twitter/tweets.html" %}
-    {% endifinstalled %}
-    {% endblock %}
+    <div id="content" class="span12 middle">
+    <h1>{% block title %}{% endblock %}</h1>
+        {% block main %}{% endblock %}
     </div>
-</div>
 
+        {% block right_panel %}
+        {% endblock %}
+
+{% endblock %}
 </div>
-</div>
+</div><!-- contentwrapper container -->
+{% endblock contentwrapper %}
 
 <div id="footer" class="container">
 {% page_menu "pages/menus/footer.html" %}
 <br style="clear:both">
 <p>
-    (c) SkyFalk Studio, 2012, develop
+    (c) SkyFalk Studio, 2012, design by Dmitry Falk
     {% ifinstalled mezzanine.mobile %}
     <span class="separator">|</span>
     <a href="{% url set_device "mobile" %}?next={{ request.path }}">{% trans "View Mobile Site" %}</a>
     {% endifinstalled %}
 </p>
-</div>
+</div><!-- footer container -->
 
 {% include "includes/footer_scripts.html" %}
 

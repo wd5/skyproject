@@ -1,0 +1,9 @@
+{% load i18n shop_tags %}
+<div id="cartpanel">
+    {% spaceless %}
+    <a href="{% url shop_cart %}" id="cart-panel">
+    {% blocktrans count request.cart.total_quantity as cart_quantity %}1 item{% plural %}{{ cart_quantity }} items{% endblocktrans %}
+    {% trans "in cart" %}:
+    {{ request.cart.total_price|currency }}</a>
+    {% endspaceless %}
+</div>
