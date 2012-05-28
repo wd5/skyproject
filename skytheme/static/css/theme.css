@@ -1,3 +1,104 @@
-.breadcrumb { margin: 10px 0 15px; }
-
 h6 { text-transform: none; }
+
+/* Header */
+
+#header {
+    padding: 15px 10px 0px 10px;
+}
+
+#headerlogo {
+    margin-top: 15px;
+}
+
+#site-logo {
+    font-size: 32px;
+    font-weight: bold;
+    font-family: Georgia;
+}
+
+#site-logo a {
+    color: black;
+}
+
+#site-logo a:hover {
+    color: black;
+    text-decoration: none;
+}
+
+.tagline {
+    color: #333;
+    float: left;
+    font-size: 14px;
+    font-style: normal;
+    margin: 9px 5px 0 4px;
+    opacity: 0.7;
+}
+
+#userpanel {
+    text-align: right;
+}
+
+/* Navigation */
+
+#navigation {
+    padding: 10px;
+}
+
+.navbar {
+    margin-bottom: 0px;
+}
+
+/* Breadcrumbs */
+
+.custom-breadcrumb {
+    margin: 5px 0 10px;
+    list-style: none outside none;
+    padding: 0px 4px;
+}
+
+.custom-breadcrumb li {
+    display: inline-block;
+}
+
+.custom-breadcrumb li .divider {
+    margin: 0 5px 0;
+}
+
+/* Content */
+
+#main {
+    padding: 10px;
+}
+
+/* Footer */
+
+#footer {
+
+    padding: 10px;
+    text-align: center;
+    color: #999;
+}
+
+#footermenu {
+    text-align: left;
+    display: inline-block;
+    width: auto;
+}
+
+#footermenu a {
+    color: #aaa;
+}
+
+#footermenu > ul {
+    border-top: 1px solid #999;
+}
+
+#footermenu ul {
+    list-style-type: none;
+    padding: 0px;
+}
+
+#footermenu ul li {
+    float: left;
+    margin-right: 10px;
+}

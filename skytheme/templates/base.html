@@ -46,34 +46,40 @@ $(function() {
 </head>
 <body id="{% block body_id %}body{% endblock %}">
 
-<div class="navbar">
-<div class="navbar-inner">
-<div class="container">
-    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-    </a>
-    {% if settings.SITE_TITLE %}<a class="brand" href="/">{{ settings.SITE_TITLE }}</a>{% endif %}
-    {% if settings.SITE_TAGLINE %}<p class="tagline">{{ settings.SITE_TAGLINE }}</p>{% endif %}
-    <div class="nav-collapse">
+<div id="header" class="container">
+
+<div class="row">
+    <div id="headerlogo" class="span6">
+        <div id="site-logo">{% if settings.SITE_TITLE %}<a class="brand" href="/">{{ settings.SITE_TITLE }}</a>{% endif %}</div>
+        <div id="site-tagline">{% if settings.SITE_TAGLINE %}<p class="tagline">{{ settings.SITE_TAGLINE }}</p>{% endif %}</div>
+    </div>
+
+    <div class="span6">
+        {% include "accounts/includes/user_panel.html" %}
         <form action="{% url search %}" class="navbar-search pull-right">
         <input class="search-query" placeholder="{% trans "Search" %}" type="text" name="q" value="{{ request.REQUEST.q }}">
         </form>
-        {% page_menu "pages/menus/dropdown.html" %}
     </div>
 </div>
-</div>
+
+</div><!-- /header -->
+<div id="navigation" class="container">
+
+<div class="row">
+<div class="span12">
+<div class="navbar">
+<div class="navbar-inner">
+<div class="container">
+    {% page_menu "pages/menus/dropdown.html" %}
+</div></div></div></div>
 </div>
 
-<div class="container">
+</div><!-- /navigation -->
+<div id="main" class="container">
+
 <div class="row">
 
-<div class="span2 left">
-    <div class="panel tree">{% page_menu "pages/menus/tree.html" %}</div>
-</div>
-
-<div class="span7 middle">
+<div id="content" class="span9">
 
 {% for message in messages %}
 <div class="alert alert-{{ message.tags }}" data-alert="alert">
@@ -81,7 +87,7 @@ $(function() {
 </div>
 {% endfor %}
 
-<ul class="breadcrumb">
+<ul class="custom-breadcrumb">
 {% spaceless %}
 {% block breadcrumb_menu %}{% page_menu "pages/menus/breadcrumb.html" %}{% endblock %}
 {% endspaceless %}
@@ -93,8 +99,7 @@ $(function() {
 
 </div>
 
-<div class="span3 right">
-    {% include "includes/user_panel.html" %}
+<div id="sidebar" class="span3 right">
     <div class="panel">
     {% block right_panel %}
     {% ifinstalled mezzanine.twitter %}
@@ -107,25 +112,17 @@ $(function() {
 </div>
 </div>
 
-<footer>
-<div class="container">
+<div id="footer" class="container">
 {% page_menu "pages/menus/footer.html" %}
 <br style="clear:both">
 <p>
-    {% trans "Powered by" %}
-    <a href="http://mezzanine.jupo.org">Mezzanine</a>{% ifinstalled cartridge.shop %},
-    <a href="http://cartridge.jupo.org">Cartridge</a>{% endifinstalled %}
-    {% trans "and" %}
-    <a href="http://www.djangoproject.com">Django</a>
-    <span class="separator">|</span>
-    Theme by <a href="http://twitter.github.com/bootstrap/">Bootstrap</a>
+    (c) SkyFalk Studio, 2012, develop
     {% ifinstalled mezzanine.mobile %}
     <span class="separator">|</span>
     <a href="{% url set_device "mobile" %}?next={{ request.path }}">{% trans "View Mobile Site" %}</a>
     {% endifinstalled %}
 </p>
 </div>
-</footer>
 
 {% include "includes/footer_scripts.html" %}
 
