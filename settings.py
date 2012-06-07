@@ -248,7 +248,7 @@ INSTALLED_APPS = (
     "django.contrib.sites",
     "django.contrib.sitemaps",
     "django.contrib.staticfiles",
-    "mezzanine-themes.classic",
+    "mezzanine_themes.classic",
     "skyutils",
     "mezzanine.boot",
     "mezzanine.conf",
