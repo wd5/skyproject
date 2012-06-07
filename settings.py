@@ -1,4 +1,3 @@
-
 ######################
 # MEZZANINE SETTINGS #
 ######################
@@ -249,7 +248,7 @@ INSTALLED_APPS = (
     "django.contrib.sites",
     "django.contrib.sitemaps",
     "django.contrib.staticfiles",
-    "skytheme",
+    "mezzanine-themes.classic",
     "skyutils",
     "mezzanine.boot",
     "mezzanine.conf",

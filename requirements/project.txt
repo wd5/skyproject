@@ -1,1 +1,2 @@
-Mezzanine==1.0.8
+Mezzanine>=1.1.0
+git+git://github.com/dfalk/mezzanine-themes#egg=mezzanine-themes
