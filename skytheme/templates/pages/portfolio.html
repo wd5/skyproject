@@ -8,6 +8,10 @@
 <script src="{{ STATIC_URL }}mezzanine/js/gallery.js"></script>
 {% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{{ STATIC_URL }}css/portfolio.css">
+{% endblock %}
+
 {% block main %}
 {{ block.super }}
 
@@ -15,7 +19,7 @@
 {{ page.gallery.content|richtext_filter|safe }}
 {% endeditable %}
 
-<ul class="thumbnails gallery">
+<ul class="thumbnails gallery portfolio">
 {% with page.gallery.images.all as images %}
 {% for image in images %}
 <li>
@@ -29,6 +33,7 @@
         <p>{{ image.description|urlize_ext }}<br>{{ forloop.counter }} / {{ images|length }}</p>
     </div>
 </li>
+<div style="clear: both"></div>
 {% endfor %}
 {% endwith %}
 </ul>
