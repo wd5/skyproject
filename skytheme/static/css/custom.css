@@ -1,0 +1,12 @@
+.topblock .span6 {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.topblock #textblock {
+    font: italic 28px Georgia;
+    margin-top: 110px;
+}    
+
+.topblock img {
+    box-shadow: 0 0 0px;
