@@ -10,3 +10,13 @@
 
 .topblock img {
     box-shadow: 0 0 0px;
+}
+
+.portfolio li {
+    display: inline;
+}
+
+.portfolio li .img-placeholder {
+    width: 320px;
+    height: 280px;
+}

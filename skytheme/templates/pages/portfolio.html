@@ -1,15 +1,11 @@
 {% extends "pages/page.html" %}
 
-{% load mezzanine_tags sky_tags %}
+{% load mezzanine_tags sky_tags thumbnail %}
 
 {% block extra_js %}
 {{ block.super }}
 <script src="{{ STATIC_URL }}mezzanine/js/jquery.tools.js"></script>
 <script src="{{ STATIC_URL }}mezzanine/js/gallery.js"></script>
-{% endblock %}
-
-{% block extra_css %}
-<link rel="stylesheet" href="{{ STATIC_URL }}css/portfolio.css">
 {% endblock %}
 
 {% block main %}
@@ -23,17 +19,16 @@
 {% with page.gallery.images.all as images %}
 {% for image in images %}
 <li>
-    <a class="thumbnail" rel="#image-{{ image.id }}" title="{{ image.description }}" href="{{ MEDIA_URL }}{{ image.file }}">
-        <img class="image-overlay-thumb" src="{{ MEDIA_URL }}{% thumbnail image.file 320 0 %}">{{ image.description|urlize_ext }}
+    <a class="thumbnail" rel="#image-{{ image.id }}" title="{{ image.description }}" href="{{ MEDIA_URL }}{{ image.file }}"><div class="img-placeholder">
+        <img class="image-overlay-thumb" src="{% thumbnail image.file.name 320x280 %}" /></div>{{ image.description|urlize_ext }}
     </a>
     <div id="image-{{ image.id }}" class="image-overlay" style="display:none;">
         <a href="#" class="image-overlay-prev">&larr;</a>
         <a href="#" class="image-overlay-next">&rarr;</a>
-        <img class="image-overlay-full" src="{{ MEDIA_URL }}{% thumbnail image.file 0 600 %}"><br>
+        <img class="image-overlay-full" src="{% thumbnail image.file.name 0x600 %}"><br>
         <p>{{ image.description|urlize_ext }}<br>{{ forloop.counter }} / {{ images|length }}</p>
     </div>
 </li>
-<div style="clear: both"></div>
 {% endfor %}
 {% endwith %}
 </ul>
